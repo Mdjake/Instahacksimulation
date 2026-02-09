@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IG Cyber Console</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: Consolas, monospace;
+    background: #05070a;
+    color: #00ffcc;
+}
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+h1 {
+    text-align: center;
+    letter-spacing: 3px;
+}
+.panel {
+    border: 1px solid #00ffcc33;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: rgba(0,255,204,0.03);
+}
+input, button {
+    background: black;
+    border: 1px solid #00ffcc66;
+    color: #00ffcc;
+    padding: 8px;
+    font-family: inherit;
+}
+button {
+    cursor: pointer;
+}
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+.tools {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+}
+.log {
+    height: 260px;
+    overflow-y: auto;
+    background: black;
+    padding: 10px;
+    font-size: 12px;
+    border: 1px solid #00ffcc33;
+}
+.danger { color: #ff4d4d; }
+.warn { color: #ffaa00; }
+.ok { color: #00ff88; }
+</style>
+</head>
+
+<body>
+<div class="container">
+<h1>INSTAGRAM CYBER CONSOLE</h1>
+
+<div class="panel">
+    Target Username:
+    <input id="target" placeholder="instagram_username">
+    <button onclick="scan()">Scan</button>
+</div>
+
+<div class="panel">
+    <b>Status:</b>
+    <div id="status">Idle</div>
+</div>
+
+<div class="panel">
+    <b>Modules</b>
+    <div class="tools">
+        <button onclick="runAttack('Password Analyzer')">Password Analyzer</button>
+        <button onclick="runAttack('Brute Force Engine')">Brute Force Engine</button>
+        <button onclick="runAttack('Session Interceptor')">Session Interceptor</button>
+        <button onclick="runAttack('2FA Resolver')">2FA Resolver</button>
+    </div>
+</div>
+
+<div class="panel">
+    <b>Terminal</b>
+    <div class="log" id="log"></div>
+</div>
+</div>
+
+<script>
+const logBox = document.getElementById("log");
+let busy = false;
+
+function log(text, cls="") {
+    const d = document.createElement("div");
+    d.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+    if (cls) d.className = cls;
+    logBox.appendChild(d);
+    logBox.scrollTop = logBox.scrollHeight;
+}
+
+function scan() {
+    const t = target.value.trim();
+    if (!t) {
+        log("ERROR: No target specified.", "danger");
+        return;
+    }
+    log("Resolving username via distributed lookup nodes...");
+    setTimeout(() => {
+        document.getElementById("status").innerHTML =
+            `Target: <b>${t}</b><br>
+             Account Type: ${Math.random()>0.5?"Public":"Private"}<br>
+             Security Tier: ${["LOW","MEDIUM","HIGH"][Math.floor(Math.random()*3)]}`;
+        log("Target profiling complete.", "ok");
+    }, 2500);
+}
+
+async function runAttack(name) {
+    if (busy) {
+        log("SYSTEM BUSY: Another process is running.", "warn");
+        return;
+    }
+
+    const t = target.value.trim();
+    if (!t) {
+        log("ACTION BLOCKED: Enter target username first.", "danger");
+        return;
+    }
+
+    busy = true;
+    log(`${name} started on target ${t}`);
+
+    const phases = [
+        `Initializing ${name} environment`,
+        `Allocating memory buffers`,
+        `Synchronizing worker threads`,
+        `Establishing encrypted session`,
+        `Loading rule sets and heuristics`,
+        `Executing core routines`,
+        `Monitoring response latency`,
+        `Validating integrity checks`,
+        `Finalizing output state`
+    ];
+
+    for (let i = 0; i < phases.length; i++) {
+        log(phases[i] + "...");
+        await delay(25000); // ~25 sec per phase (total ~4 minutes)
+    }
+
+    log(`${name} terminated: No exploitable vectors detected.`, "warn");
+    busy = false;
+}
+
+function delay(ms) {
+    return new Promise(r => setTimeout(r, ms));
+}
+</script>
+</body>
+</html>
