@@ -285,12 +285,16 @@ app.add_middleware(
 # ─────────────────────────────────────────────
 # Dependencies
 # ─────────────────────────────────────────────
-async def require_api_key(x_api_key: str = Header(..., alias="X-API-Key")):
-    """Validates X-API-Key header on protected routes."""
-    if x_api_key != settings.API_KEY:
+async def require_api_key(
+    x_api_key: Optional[str] = Header(None, alias="X-API-Key"),
+    api_key: Optional[str] = Query(None),
+):
+    """Validates API key from either header or query parameter."""
+    key = x_api_key or api_key
+    if not key or key != settings.API_KEY:
         logger.warning("Rejected request — invalid API key.")
         raise HTTPException(status_code=401, detail="Invalid or missing API key.")
-    return x_api_key
+    return key
 
 
 async def check_rate_limit(request: Request) -> int:
