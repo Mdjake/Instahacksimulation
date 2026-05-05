@@ -272,12 +272,7 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# FIX [1]: TrustedHostMiddleware properly wired up
-# Prevents Host Header Injection attacks
-app.add_middleware(
-    TrustedHostMiddleware,
-    allowed_hosts=settings.TRUSTED_HOSTS,
-)
+
 
 app.add_middleware(
     CORSMiddleware,
