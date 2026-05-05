@@ -1,4 +1,4 @@
-DO ONE THING FULLY UPGRADE THIS api code make it easy to use easy to combine any input add easy rememberable endpoints and can be used all with & easily : """
+"""
 Advanced FastAPI + SQLiteCloud API  v2.1.0
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Features:
